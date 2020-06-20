@@ -1,0 +1,15 @@
+[package]
+name = "gbvs-hook"
+version = "0.1.0"
+authors = ["super-continent"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+winapi = { version = "0.3.8", features = ["minwindef", "consoleapi", "libloaderapi"] }
+fltk = { version = "0.6", features = ["fltk-bundled"] }
+detour = "0.7"
