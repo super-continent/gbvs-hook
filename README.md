@@ -1,4 +1,4 @@
-# gbvs-hook
+# GBVS-Hook
 BBScript extractor and loader for Granblue Fantasy: Versus
 
 ## How to Use This
@@ -7,6 +7,24 @@ To load these scripts, you must set your mod folder to the path containing all p
 
 ### DISCLAIMER
 Currently there are also a few issues with this program, the loader cannot currently keep track of which scripts correspond to what parts of the game accurately, so an internal counter seems to get misaligned if used on certain stages and certain mods, its recommended to use the default stage with training mode for consistency.
+
+## Character Shortname List
+* Gran = GRN
+* Katalina = CTL
+* Beelzebub = BLZ
+* Charlotta = CHA
+* Ferry = FER
+* Vaseraga = VAS
+* Lancelot = LAN
+* Metera = MET
+* Lowain = LOW
+* Ladiva = FAS
+* Zeta = ZET
+* Percival = PER
+* Narmaya = NRM
+* Djeeta = DJT
+* Soriz = SRZ
+* Zooey = ZOO
 
 ## Credit
 The bundled DLL injector was created by Nefarius, you can view the project [here](https://github.com/nefarius/Injector).
