@@ -7,3 +7,6 @@ To load these scripts, you must set your mod folder to the path containing all p
 
 ### DISCLAIMER
 Currently there are also a few issues with this program, the loader cannot currently keep track of which scripts correspond to what parts of the game accurately, so an internal counter seems to get misaligned if used on certain stages and certain mods, its recommended to use the default stage with training mode for consistency.
+
+## Credit
+The bundled DLL injector was created by Nefarius, you can view the project [here](https://github.com/nefarius/Injector).
