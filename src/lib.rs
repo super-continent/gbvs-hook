@@ -4,6 +4,7 @@ use std::ffi::CString;
 use std::io::prelude::*;
 use std::io::{ Error, ErrorKind };
 use std::sync::{ Arc, Mutex };
+use std::ptr;
 
 use winapi::{
     shared::minwindef::{ HMODULE, HINSTANCE, DWORD },
@@ -39,13 +40,12 @@ static_detour!{ static LoadScript: extern "win64" fn(u64, u64, u64); }
 type FnLoadScript = extern "win64" fn(u64, u64, u64);
 
 fn initialize() {
-    unsafe { AllocConsole(); }
+    //unsafe { AllocConsole(); }
     println!("Injected! Initializing...");
 
-    let module_name = CString::new("GBVS-Win64-Shipping.exe").expect("CString::new failed at module_name");
     let base_address: HMODULE;
 
-    unsafe { base_address = GetModuleHandleA(module_name.as_ptr()); }
+    unsafe { base_address = GetModuleHandleA(ptr::null()); }
     println!("Got base address: {:#X?}", base_address as u64);
 
     let load_script_address: u64 = base_address as u64 + 0x4CD120;
@@ -59,7 +59,6 @@ fn initialize() {
         last_character: String::new(),
     }));
 
-    let config_ref = config.clone();
 
     let scripts_vec: Arc<Mutex<Vec<Vec<u8>>>> = Arc::new(Mutex::new(Vec::new()));
 
@@ -93,8 +92,6 @@ fn initialize() {
 
     let mut but_extract = Button::new(10, 10, 150, 50, "Extract Script");
     let mut but_set_mod_path = Button::new(10, 60, 150, 50, "Set Mods Folder");
-    let mut check_enable_mods = CheckButton::new(185, 60, 150, 50, "Enable Mods");
-    check_enable_mods.set_checked(true);
 
     but_extract.set_callback(Box::new(move || {
         let mut sfd = FileDialog::new(FileDialogType::BrowseSaveFile);
@@ -169,7 +166,6 @@ fn hook_load_script(dest: u64, script_ptr: u64, script_size: u64, scripts_vec: A
 
     if config_lock.mods_enabled {
         // Grab character name if Player 1 or Player 2 main script
-        let mut file_name = String::new();
         if scripts.len() == 1 || scripts.len() == 7 {
 
             unsafe {
@@ -198,6 +194,8 @@ fn hook_load_script(dest: u64, script_ptr: u64, script_size: u64, scripts_vec: A
             10 => {},
             11 => {},
             12 => {},
+            13 => { mod_file.push(format!("cmn.bbscript")) },
+            14 => { mod_file.push(format!("cmnef.bbscript")) },
             _  => {},
         };
 
